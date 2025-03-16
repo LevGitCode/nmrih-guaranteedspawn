@@ -71,6 +71,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	RegPluginLibrary("guaranteedspawn");
 	CreateNative("GS_SetCanSpawn", Native_SetCanSpawn);
+	CreateNative("GS_IsSpawnAllowed", Native_IsSpawnAllowed);
 	spawnFwd = new GlobalForward("GS_OnGuaranteedSpawn", ET_Event, Param_Cell, Param_Cell, Param_Cell);
 	spawnFwdPost = new GlobalForward("GS_OnGuaranteedSpawnPost", ET_Event, Param_Cell, Param_Cell, Param_Cell);
 	return APLRes_Success;
@@ -163,6 +164,21 @@ int Native_SetCanSpawn(Handle plugin, int numParams)
 	}
 
 	return 0;
+}
+
+int Native_IsSpawnAllowed(Handle plugin, int numParams)
+{
+	int client = GetNativeCell(1);
+	if (client < 1 || client > MaxClients)
+	{
+		return ThrowNativeError(SP_ERROR_NATIVE, "Invalid client index (%d)", client);
+	}
+	if (!IsClientConnected(client))
+	{
+		return ThrowNativeError(SP_ERROR_NATIVE, "Client %d is not connected", client);
+	}
+
+	return CouldSpawnThisRound(client);
 }
 
 void Event_PlayerSpawned(Event event, const char[] name, bool dontBroadcast)
