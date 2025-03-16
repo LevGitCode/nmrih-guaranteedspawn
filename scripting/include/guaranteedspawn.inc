@@ -36,3 +36,11 @@ forward void GS_OnGuaranteedSpawnPost(int client, GSMethod method, int target);
  * @param canSpawn     Whether the player can spawn
  */
 native void GS_SetCanSpawn(int client, bool canSpawn);
+
+/**
+ * Checks if a client is allowed to spawn via their guaranteed spawn.
+ *
+ * @param client     Player's index
+ * @return           True if the player can spawn, false otherwise
+ */
+native bool GS_IsSpawnAllowed(int client);
