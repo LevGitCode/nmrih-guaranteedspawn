@@ -2,7 +2,7 @@
 #include <guaranteedspawn>
 #include <adminmenu>
 
-#define ADMFLAG_GIVESPAWN ADMFLAG_CHEATS
+#define ADMFLAG_GIVESPAWN ADMFLAG_BAN
 
 TopMenu hTopMenu;
 
